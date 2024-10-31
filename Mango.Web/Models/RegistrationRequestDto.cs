@@ -9,6 +9,7 @@ namespace Mango.Web.Models
         [Required]
         public string Name { get; set; }
         [Required]
+        [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
         [Required]
         public string Password { get; set; }
