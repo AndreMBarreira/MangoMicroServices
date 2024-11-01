@@ -4,6 +4,8 @@ using Mango.Services.ProductAPI.Models;
 using Mango.Services.ProductAPI.Models.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace Mango.Services.ProductAPI.Controllers
 {
@@ -35,6 +37,51 @@ namespace Mango.Services.ProductAPI.Controllers
                 _response.isSuccess = false;
                 _response.Message = ex.Message;
 
+            }
+            return _response;
+        }
+        [HttpGet]
+        [Route("{id:int}")]
+        public ResponseDto Get(int id)
+        {
+            try
+            {
+                Product obj = _db.Products.First(u => u.ProductId == id);
+                _response.Result = _mapper.Map<ProductDto>(obj);
+            }
+            catch (Exception ex)
+            {
+                _response.isSuccess = false;
+                _response.Message = ex.Message;
+            }
+            return _response;
+        }
+
+        [HttpGet]
+        [Route("GetByName{searchString}")]
+        public ResponseDto Get(string searchString)
+        {
+            try
+            {
+                IEnumerable < Product > products = from p in _db.Products
+                               select p;
+
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    products = products.Where(p => p.Name.ToUpper().Contains(searchString.ToUpper()) 
+                        || p.Price.ToString().Contains(searchString));
+                }
+                
+                if (products == null)
+                {
+                    _response.isSuccess = false;
+                }
+                _response.Result = _mapper.Map<List<ProductDto>>(products);
+            }
+            catch (Exception ex)
+            {
+                _response.isSuccess = false;
+                _response.Message = ex.Message;
             }
             return _response;
         }
