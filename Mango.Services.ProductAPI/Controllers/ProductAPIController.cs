@@ -2,10 +2,8 @@
 using Mango.Services.ProductAPI.Data;
 using Mango.Services.ProductAPI.Models;
 using Mango.Services.ProductAPI.Models.Dto;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 
 namespace Mango.Services.ProductAPI.Controllers
 {
@@ -77,6 +75,63 @@ namespace Mango.Services.ProductAPI.Controllers
                     _response.isSuccess = false;
                 }
                 _response.Result = _mapper.Map<List<ProductDto>>(products);
+            }
+            catch (Exception ex)
+            {
+                _response.isSuccess = false;
+                _response.Message = ex.Message;
+            }
+            return _response;
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "ADMIN")]
+        public ResponseDto Post([FromBody] ProductDto couponDto)
+        {
+            try
+            {
+                Product obj = _mapper.Map<Product>(couponDto);
+                _db.Products.Add(obj);
+                _db.SaveChanges();
+                _response.Result = _mapper.Map<ProductDto>(obj);
+            }
+            catch (Exception ex)
+            {
+                _response.isSuccess = false;
+                _response.Message = ex.Message;
+            }
+            return _response;
+        }
+
+        [HttpPut]
+        [Authorize(Roles = "ADMIN")]
+        public ResponseDto Put([FromBody] ProductDto productDto)
+        {
+            try
+            {
+                Product obj = _mapper.Map<Product>(productDto);
+                _db.Products.Update(obj);
+                _db.SaveChanges();
+                _response.Result = _mapper.Map<ProductDto>(obj);
+            }
+            catch (Exception ex)
+            {
+                _response.isSuccess = false;
+                _response.Message = ex.Message;
+            }
+            return _response;
+        }
+
+        [HttpDelete]
+        [Route("{id:int}")]
+        [Authorize(Roles = "ADMIN")]
+        public ResponseDto Delete(int id)
+        {
+            try
+            {
+                Product obj = _db.Products.First(u => u.ProductId == id);
+                _db.Products.Remove(obj);
+                _db.SaveChanges();
             }
             catch (Exception ex)
             {
