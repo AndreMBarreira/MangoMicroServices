@@ -56,7 +56,7 @@ namespace Mango.Services.ProductAPI.Controllers
         }
 
         [HttpGet]
-        [Route("GetByName{searchString}")]
+        [Route("GetBySearch{searchString}")]
         public ResponseDto Get(string searchString)
         {
             try
