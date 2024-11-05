@@ -86,11 +86,11 @@ namespace Mango.Services.ProductAPI.Controllers
 
         [HttpPost]
         [Authorize(Roles = "ADMIN")]
-        public ResponseDto Post([FromBody] ProductDto couponDto)
+        public ResponseDto Post([FromBody] ProductDto productDto)
         {
             try
             {
-                Product obj = _mapper.Map<Product>(couponDto);
+                Product obj = _mapper.Map<Product>(productDto);
                 _db.Products.Add(obj);
                 _db.SaveChanges();
                 _response.Result = _mapper.Map<ProductDto>(obj);

@@ -44,7 +44,37 @@ namespace Mango.Web.Controllers
                 ResponseDto? response = await _productService.CreateProductAsync(model);
                 if (response != null && response.isSuccess)
                 {
-                    TempData["success"] = "Coupon created successfully";
+                    TempData["success"] = "Product created successfully";
+                    return RedirectToAction(nameof(ProductIndex));
+                }
+                else
+                {
+                    TempData["error"] = response?.Message;
+                }
+            }
+            return View(model);
+        }
+
+        public async Task<IActionResult> ProductUpdate(int productId)
+        {
+            ResponseDto? response = await _productService.GetProductByIdAsync(productId);
+            if (response != null && response.isSuccess)
+            {
+                ProductDto? model = JsonConvert.DeserializeObject<ProductDto>(Convert.ToString(response.Result));
+                return View(model);
+            }
+            return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ProductUpdate(ProductDto model)
+        {
+            if (ModelState.IsValid)
+            {
+                ResponseDto? response = await _productService.UpdateProductAsync(model);
+                if (response != null && response.isSuccess)
+                {
+                    TempData["success"] = "Product updated successfully";
                     return RedirectToAction(nameof(ProductIndex));
                 }
                 else
