@@ -11,6 +11,9 @@
 	<div class="card-body p-4">
 		<div class="row pb-3">
 			<div class="col-6">
+				Find by name: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+				<input type="submit" value="Search" class="btn btn-default" /> |
+				<a asp-action="ProductIndex">Back to Full List</a>
 			</div>
 			<div class="col-6 text-end">
 				<a asp-action="ProductCreate" class="btn btn-outline-primary"><i class="bi bi-plus-square"></i> Create New Product</a>
@@ -21,13 +24,13 @@
 			<thead>
 				<tr>
 					<th>
-						Name
+						<a asp-action="ProductIndex" asp-route-sortOrder="@ViewData["NameSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Name</a>
 					</th>
 					<th>
-						Category Name
+						<a asp-action="ProductIndex" asp-route-sortOrder="@ViewData["CategorySortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Category Name</a>
 					</th>
 					<th>
-						Price
+						<a asp-action="ProductIndex" asp-route-sortOrder="@ViewData["PriceSortParm"]" asp-route-currentFilter="@ViewData["CurrentFilter"]">Price</a>
 					</th>
 					<th></th>
 				</tr>
