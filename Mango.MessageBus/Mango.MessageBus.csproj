@@ -7,11 +7,14 @@
   </PropertyGroup>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   <ItemGroup>
     <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.18.2" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
+=======
+>>>>>>> 394eeadf0741ecd5150176229537f5c6673bb32e
 =======
 >>>>>>> 394eeadf0741ecd5150176229537f5c6673bb32e
 </Project>
