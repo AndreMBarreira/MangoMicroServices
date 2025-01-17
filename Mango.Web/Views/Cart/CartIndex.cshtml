@@ -67,6 +67,12 @@
                             <input asp-for="CartHeader.CouponCode" />
                             <button type="submit" asp-action="ApplyCoupon" class="btn btn-sm btn-success"> Apply </button>
                         }
+                            else
+                            {
+                                <span>Coupon:</span>
+                                <input asp-for="CartHeader.CouponCode" />
+                                <button type="submit" asp-action="RemoveCoupon" class="btn btn-sm btn-danger"> Remove </button>
+                            }
                     </div>
                     <div class="col-6 text-end">
                         <span class="text-danger" style="font-size:21px;">  Order Total : @string.Format("{0:c}", Model.CartHeader.CartTotal) <br /></span>
