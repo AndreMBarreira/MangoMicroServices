@@ -21,4 +21,8 @@
     <PackageReference Include="System.Formats.Asn1" Version="6.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\ProductImages\" />
+  </ItemGroup>
+
 </Project>
